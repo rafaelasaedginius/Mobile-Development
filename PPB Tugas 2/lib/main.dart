@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
 }
 
 class RowColumnPage extends StatelessWidget {
-  const RowColumnPage({Key? key}) : super(key: key);
+  const RowColumnPage({super.key}); // Menggunakan sintaks modern super.key
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double screenWidth = mediaQueryData.size.width;
-    double screenHeight = mediaQueryData.size.height;
+    // Menghapus mediaQueryData dan screenHeight yang tidak terpakai
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -42,36 +42,32 @@ class RowColumnPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: AspectRatio(
-              aspectRatio: 1.0,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
-                padding: EdgeInsets.all(20.0),
-                color: Colors.lightBlue[100],
-                child: Center(
-                  child: Image.network(
-                    'https://picsum.photos/200',
-                    fit: BoxFit.cover,
-                    width: 500,
-                  ),
-                ),
+            width: screenWidth,
+            height: screenWidth,
+            margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+            padding: const EdgeInsets.all(20.0),
+            color: Colors.lightBlue[100],
+            child: Center(
+              child: Image.network(
+                'https://picsum.photos/200',
+                fit: BoxFit.cover,
+                width: 500,
               ),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
-            padding: EdgeInsets.all(20.0),
+            width: screenWidth,
+            margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+            padding: const EdgeInsets.all(20.0),
             color: Colors.pink[200],
-            child: Text('What image is that', style: TextStyle(fontSize: 16)),
+            child: const Text('What image is that', style: TextStyle(fontSize: 16)),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: screenWidth,
             color: Colors.yellow[200],
-            padding: EdgeInsets.all(20.0),
-            margin: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-            child: Row(
+            padding: const EdgeInsets.all(20.0),
+            margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -79,6 +75,48 @@ class RowColumnPage extends StatelessWidget {
                 Column(children: [Icon(Icons.landscape), Text("Scenery")]),
                 Column(children: [Icon(Icons.people), Text("People")]),
               ],
+            ),
+          ),
+          const CounterCard(),
+        ],
+      ),
+    );
+  }
+}
+
+class CounterCard extends StatefulWidget {
+  const CounterCard({super.key});
+
+  @override
+  State<CounterCard> createState() => _CounterCardState();
+}
+
+class _CounterCardState extends State<CounterCard> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+      padding: const EdgeInsets.all(20.0),
+      width: MediaQuery.of(context).size.width,
+      color: Colors.cyan[100],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Counter here: $_counter", style: const TextStyle(fontSize: 16)),
+          Container(
+            color: Colors.cyan[200],
+            padding: const EdgeInsets.all(5.0),
+            child: IconButton(
+              onPressed: _incrementCounter,
+              icon: const Icon(Icons.add, color: Colors.black, size: 16),
             ),
           ),
         ],

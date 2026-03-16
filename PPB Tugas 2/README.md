@@ -1,17 +1,13 @@
-# ppb_tugas_2
+# Tugas 2 Pemrograman Perangkat Bergerak
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Penjelasan Widget :
+- Scaffold : Struktur dasar visual untuk AppBar dan Body darii aplikasi.
+- Column : Struktur yang menyusun child widget secara vertical
+- Row : Struktur yang menyusun child widget secara horizontal
+- Container : Widget wadah untuk menampung berbagai macam anak widget dan bisa mengatur padding, margin, warna dan dekorasi lainnya.
+- Center : Widget yang mengatur child nya pas di tengah.
+- Image : Widget yang menampilkan gambar.
+- Icon : Widget untuk menampilkan icon/simbol.
+- Text : Widget untuk menampilkan tulisan.
+- IconButton : Widget tombol yang menyertakan icon.
+- Stateful Widget : Widget dinamis yang bisa berubah menurut state/keadaan aplikasi.
