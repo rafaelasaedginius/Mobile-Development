@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "60887274029",
+    "project_id": "auth-module-e2090",
+    "storage_bucket": "auth-module-e2090.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60887274029:android:fc80fe6c4ef8c9041a9ea4",
+        "android_client_info": {
+          "package_name": "com.example.auth_module"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH86kqTd_Rppw4GcbPlqv1CBB_XZ09x9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
