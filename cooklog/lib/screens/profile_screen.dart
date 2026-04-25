@@ -160,25 +160,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'App',
+                    'Logout',
                     style: GoogleFonts.jost(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black45,
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  _buildMenuItem(
-                    icon: Icons.book_outlined,
-                    title: 'My Recipes',
-                    onTap: () =>
-                        Navigator.pushNamed(context, 'my_recipe'),
-                  ),
-                  _buildMenuItem(
-                    icon: Icons.favorite_outline,
-                    title: 'My Favorites',
-                    onTap: () =>
-                        Navigator.pushNamed(context, 'favorite'),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(

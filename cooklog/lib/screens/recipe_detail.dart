@@ -16,6 +16,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   final AuthService _authService = AuthService();
 
   bool _isFavorite = false;
+  String? _favoriteId;
   String? _recipeId;
 
   @override
@@ -28,16 +29,34 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   void checkFavorite() async {
     final userId = _authService.getCurrentUserId();
     if (userId == null || _recipeId == null) return;
-    final result = await _favoriteService.isfavorite(userId, _recipeId!);
-    setState(() => _isFavorite = result);
+
+    final snapshot = await _favoriteService.getFavoriteDoc(userId, _recipeId!);
+    if (snapshot != null) {
+      setState(() {
+        _isFavorite = true;
+        _favoriteId = snapshot;
+      });
+    } else {
+      setState(() {
+        _isFavorite = false;
+        _favoriteId = null;
+      });
+    }
   }
 
   void toggleFavorite(String userId) async {
-    if (_isFavorite) {
-      // TODO: hapus favorite - butuh favoriteId, akan dihandle nanti
+    if (_isFavorite && _favoriteId != null) {
+      await _favoriteService.deleteFavorite(_favoriteId!);
+      setState(() {
+        _isFavorite = false;
+        _favoriteId = null;
+      });
     } else {
-      await _favoriteService.addFavorite(userId, _recipeId!);
-      setState(() => _isFavorite = true);
+      final docRef = await _favoriteService.addFavorite(userId, _recipeId!);
+      setState(() {
+        _isFavorite = true;
+        _favoriteId = docRef;
+      });
     }
   }
 
@@ -48,6 +67,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       'description': data['description'],
       'ingredients': data['ingredients'],
       'steps': data['steps'],
+      'imageUrl': data['imageUrl'], // ✅ pass imageUrl saat edit
     });
   }
 
@@ -66,7 +86,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         future: _recipeService.getRecipeById(_recipeId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(color: Color(0xFFE8733A)));
+            return const Center(
+                child: CircularProgressIndicator(color: Color(0xFFE8733A)));
           }
           if (!snapshot.hasData || snapshot.data == null) {
             return const Center(child: Text('Recipe not found'));
@@ -100,7 +121,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       _isFavorite ? Icons.favorite : Icons.favorite_outline,
                       color: Colors.white,
                     ),
-                    onPressed: () => toggleFavorite(userId!),
+                    onPressed: userId != null
+                        ? () => toggleFavorite(userId)
+                        : null,
                   ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
@@ -109,7 +132,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       : Container(
                     color: const Color(0xFFFFE0CC),
                     child: const Center(
-                      child: Icon(Icons.restaurant, size: 80, color: Color(0xFFE8733A)),
+                      child: Icon(Icons.restaurant,
+                          size: 80, color: Color(0xFFE8733A)),
                     ),
                   ),
                 ),
@@ -122,32 +146,49 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     children: [
                       Text(
                         data['title'] ?? '',
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2D2D2D)),
+                        style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF2D2D2D)),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'by ${data['authorName'] ?? ''}',
-                        style: const TextStyle(color: Colors.black45, fontSize: 13),
+                        style: const TextStyle(
+                            color: Colors.black45, fontSize: 13),
                       ),
                       if (data['description'] != null) ...[
                         const SizedBox(height: 16),
-                        Text(data['description'], style: const TextStyle(fontSize: 14, color: Color(0xFF555555))),
+                        Text(data['description'],
+                            style: const TextStyle(
+                                fontSize: 14, color: Color(0xFF555555))),
                       ],
                       const SizedBox(height: 24),
-                      const Text('Ingredients', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE8733A))),
+                      const Text('Ingredients',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFE8733A))),
                       const SizedBox(height: 12),
                       ...ingredients.map((item) => Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Row(
                           children: [
-                            const Icon(Icons.circle, size: 8, color: Color(0xFFE8733A)),
+                            const Icon(Icons.circle,
+                                size: 8, color: Color(0xFFE8733A)),
                             const SizedBox(width: 10),
-                            Expanded(child: Text(item, style: const TextStyle(fontSize: 14))),
+                            Expanded(
+                                child: Text(item,
+                                    style: const TextStyle(fontSize: 14))),
                           ],
                         ),
                       )),
                       const SizedBox(height: 24),
-                      const Text('Steps', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE8733A))),
+                      const Text('Steps',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFE8733A))),
                       const SizedBox(height: 12),
                       ...steps.asMap().entries.map((entry) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
@@ -157,10 +198,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             CircleAvatar(
                               radius: 12,
                               backgroundColor: const Color(0xFFE8733A),
-                              child: Text('${entry.key + 1}', style: const TextStyle(fontSize: 11, color: Colors.white)),
+                              child: Text('${entry.key + 1}',
+                                  style: const TextStyle(
+                                      fontSize: 11, color: Colors.white)),
                             ),
                             const SizedBox(width: 12),
-                            Expanded(child: Text(entry.value, style: const TextStyle(fontSize: 14))),
+                            Expanded(
+                                child: Text(entry.value,
+                                    style:
+                                    const TextStyle(fontSize: 14))),
                           ],
                         ),
                       )),
