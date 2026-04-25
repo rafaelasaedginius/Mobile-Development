@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739690866225",
+    "project_id": "cooklog-70e45",
+    "storage_bucket": "cooklog-70e45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739690866225:android:8571fc7f97d0a435b79710",
+        "android_client_info": {
+          "package_name": "com.example.cooklog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0-wcwhP1ark37YNEChgpw0tkW6E8JDdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
