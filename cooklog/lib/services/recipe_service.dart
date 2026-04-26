@@ -21,6 +21,14 @@ class RecipeService {
   }
   Future<void> deleteRecipe(String id) async {
     await _recipes.doc(id).delete();
+    final favorites = await FirebaseFirestore.instance
+        .collection('favorites')
+        .where('recipeId', isEqualTo: id)
+        .get();
+
+    for (final doc in favorites.docs) {
+      await doc.reference.delete();
+    }
   }
 
   Future<Map<String, dynamic>?> getRecipeById(String id) async {

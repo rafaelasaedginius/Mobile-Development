@@ -44,5 +44,14 @@ class AuthService {
     return _auth.currentUser?.displayName;
   }
 
+  Future<void> updateProfile({required String name, String? photoUrl}) async {
+    final userId = getCurrentUserId();
+    if (userId == null) return;
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'name': name,
+      'photoUrl': photoUrl,
+    });
+  }
+
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 }
