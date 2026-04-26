@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/favorite_service.dart';
 import '../services/recipe_service.dart';
 import '../services/auth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // QuerySnapshot
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -90,7 +90,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 final favoriteId = favorites[index].id;
                 final recipeId = favoriteData['recipeId'] as String;
 
-                // Fetch recipe detail by recipeId
                 return FutureBuilder<Map<String, dynamic>?>(
                   future: _recipeService.getRecipeById(recipeId),
                   builder: (context, recipeSnapshot) {

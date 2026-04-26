@@ -67,7 +67,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       'description': data['description'],
       'ingredients': data['ingredients'],
       'steps': data['steps'],
-      'imageUrl': data['imageUrl'], // ✅ pass imageUrl saat edit
+      'imageUrl': data['imageUrl'],
     });
   }
 

@@ -49,62 +49,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+
     return Scaffold(
       backgroundColor: const Color(0xFFE8733A),
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
-            children: [
-            // Perkecil bagian atas
-            Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(18),
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.symmetric(
+                  vertical: keyboardHeight > 0 ? 10 : 20),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: const Icon(
+                      Icons.menu_book_rounded,
+                      size: 44,
+                      color: Colors.white,
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.menu_book_rounded,
-                    size: 44,
-                    color: Colors.white,
+                  const SizedBox(height: 10),
+                  Text(
+                    'CookLog',
+                    style: GoogleFonts.jost(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'CookLog',
-                  style: GoogleFonts.jost(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 1.5,
+                  Text(
+                    'Join and share your recipes',
+                    style:
+                    GoogleFonts.jost(fontSize: 12, color: Colors.white70),
                   ),
-                ),
-                Text(
-                  'Join and share your recipes',
-                  style: GoogleFonts.jost(fontSize: 12, color: Colors.white70),
-                ),
-              ],
-            ),
-          ),
-
-          // Bagian form ambil sisa ruang
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFF8F0),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
+                ],
               ),
-              child: SingleChildScrollView(
+            ),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFF8F0),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
+                  ),
+                ),
+                child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(28, 28, 28, 20),
+                  padding: EdgeInsets.fromLTRB(
+                      28, 28, 28, keyboardHeight > 0 ? keyboardHeight : 20),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
                         'Sign up',
                         style: GoogleFonts.jost(
@@ -114,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 6, bottom: 24),
+                        margin: const EdgeInsets.only(top: 6, bottom: 16),
                         height: 3,
                         width: 40,
                         decoration: BoxDecoration(
@@ -139,11 +143,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black12)),
                           focusedBorder: const UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Color(0xFFE8733A), width: 2)),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE8733A), width: 2)),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 16),
                       Text('Email',
                           style: GoogleFonts.jost(
                               fontSize: 14,
@@ -162,11 +166,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black12)),
                           focusedBorder: const UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Color(0xFFE8733A), width: 2)),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE8733A), width: 2)),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 16),
                       Text('Password',
                           style: GoogleFonts.jost(
                               fontSize: 14,
@@ -196,14 +200,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black12)),
                           focusedBorder: const UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Color(0xFFE8733A), width: 2)),
+                              borderSide: BorderSide(
+                                  color: Color(0xFFE8733A), width: 2)),
                         ),
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 20),
                       if (_errorCode != "")
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
+                          padding: const EdgeInsets.only(bottom: 12),
                           child: Text(_errorCode,
                               style: GoogleFonts.jost(
                                   color: Colors.red, fontSize: 13)),
