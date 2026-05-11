@@ -1,17 +1,12 @@
-# cartoonizer
+# Cartoonizer
 
-A new Flutter project.
+Cartoonizer is a simple On-Edge image style transfer mobile application. The Application use TFlite models to change the style of inputted image to cartoon-like style.
 
-## Getting Started
+## Model
 
-This project is a starting point for a Flutter application.
+- Model Name : CartoonGAN
+- Source : https://www.kaggle.com/models/spsayakpaul/cartoongan/tfLite/dr/1?tfhub-redirect=true
 
-A few resources to get you started if this is your first Flutter project:
+## Implementation
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Using flutter TFlite package to load and run the TFlite model file. TFLite loads the model by mapping the .tflite binary file into a specialized Interpreter that manages the neural network’s graph and memory. To run it, the app pre-processes an image into a normalized 4D array (Tensor) that matches the model's required input shape, passes this numerical data into the Interpreter for inference, and then extracts the processed values from the output tensor to be reconstructed back into a visible image.
